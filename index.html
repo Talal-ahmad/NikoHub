@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>NikoHub • Crypto Intelligence</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at 10% 20%, #0a0c12, #05070c);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      color: #eef2ff;
+      line-height: 1.5;
+      padding: 2rem 1.5rem;
+    }
+
+    /* glassmorphism container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* header + branding */
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+      padding-bottom: 1.25rem;
+    }
+
+    .logo-area h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #A5F0FF, #6C63FF, #FF8C8C);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-area p {
+      font-size: 0.9rem;
+      color: #8b9bcf;
+      margin-top: 0.3rem;
+    }
+
+    .favorite-stats {
+      background: rgba(12, 20, 30, 0.7);
+      backdrop-filter: blur(8px);
+      padding: 0.5rem 1.2rem;
+      border-radius: 60px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid rgba(100, 200, 255, 0.3);
+    }
+
+    .favorite-stats span {
+      color: #f9c74f;
+      font-weight: 700;
+      margin-left: 0.25rem;
+    }
+
+    /* search & filter bar */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .search-box {
+      flex: 2;
+      min-width: 200px;
+      display: flex;
+      background: #11161f;
+      border-radius: 48px;
+      border: 1px solid #2a3442;
+      padding: 0.4rem 0.8rem;
+      align-items: center;
+      transition: all 0.2s;
+    }
+
+    .search-box:focus-within {
+      border-color: #5f9eff;
+      box-shadow: 0 0 8px rgba(95, 158, 255, 0.4);
+    }
+
+    .search-box input {
+      background: transparent;
+      border: none;
+      padding: 0.7rem 1rem;
+      font-size: 1rem;
+      color: white;
+      width: 100%;
+      outline: none;
+    }
+
+    .search-box button {
+      background: none;
+      border: none;
+      color: #7d8fb3;
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0 0.5rem;
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: #131a24;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 32px;
+      font-weight: 500;
+      color: #b9c7e0;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.85rem;
+    }
+
+    .filter-btn.active {
+      background: #2b6ef0;
+      color: white;
+      box-shadow: 0 4px 12px rgba(43, 110, 240, 0.4);
+    }
+
+    /* news grid */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.8rem;
+      margin: 2rem 0;
+    }
+
+    .news-card {
+      background: rgba(18, 25, 40, 0.65);
+      backdrop-filter: blur(2px);
+      border-radius: 28px;
+      border: 1px solid rgba(72, 187, 255, 0.15);
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .news-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(80, 180, 255, 0.5);
+      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-img {
+      height: 170px;
+      background-size: cover;
+      background-position: center;
+      background-color: #0e1724;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 0.8rem;
+    }
+
+    .category-badge {
+      background: #000000aa;
+      backdrop-filter: blur(4px);
+      border-radius: 40px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #c3e2ff;
+    }
+
+    .card-content {
+      padding: 1.4rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .news-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+
+    .news-summary {
+      font-size: 0.85rem;
+      color: #b9c7e0;
+      margin-bottom: 1.2rem;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.6rem;
+    }
+
+    .date {
+      font-size: 0.7rem;
+      color: #7e8eb0;
+    }
+
+    .favorite-btn {
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: 0.1s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #94a3b8;
+    }
+
+    .favorite-btn.active {
+      color: #ffbc3c;
+      text-shadow: 0 0 4px #ffb347;
+    }
+
+    .read-more {
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #6c9eff;
+      border-bottom: 1px dashed #6c9eff;
+    }
+
+    /* empty state */
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      background: rgba(0,0,0,0.3);
+      border-radius: 2rem;
+      margin: 2rem 0;
+    }
+
+    /* footer */
+    .footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #4c5a72;
+      border-top: 1px solid #1e2a3a;
+      padding-top: 2rem;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 1.2rem; }
+      .logo-area h1 { font-size: 2rem; }
+      .hero { flex-direction: column; gap: 1rem; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <div class="logo-area">
+      <h1>⚡ NIKOHUB</h1>
+      <p>decentralized intelligence • real-time crypto pulse</p>
+    </div>
+    <div class="favorite-stats">
+      🔖 saved favorites • <span id="favCount">0</span> articles
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search news, tokens, or trends...">
+      <button id="clearSearchBtn">✖</button>
+    </div>
+    <div class="filter-group" id="filterGroup">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="Bitcoin">₿ Bitcoin</button>
+      <button class="filter-btn" data-filter="Ethereum">🔷 Ethereum</button>
+      <button class="filter-btn" data-filter="DeFi">💧 DeFi</button>
+      <button class="filter-btn" data-filter="Altcoins">📈 Altcoins</button>
+      <button class="filter-btn" data-filter="Regulation">⚖️ Regulation</button>
+    </div>
+  </div>
+
+  <div id="newsContainer" class="news-grid">
+    <!-- dynamic cards injected here -->
+  </div>
+  <div class="footer">
+    NikoHub • Crypto news hub • favorites saved in your browser (localStorage)
+  </div>
+</div>
+
+<script>
+  // ---------- MOCK CRYPTO NEWS DATABASE (rich & diverse) ----------
+  const NEWS_DB = [
+    { id: 1, title: "Bitcoin breaks $72k resistance as institutional inflows surge", summary: "BlackRock and Fidelity lead record ETF inflows; analysts predict new ATH next month.", category: "Bitcoin", date: "Apr 5, 2026", image: "https://placehold.co/600x400/1a2634/white?text=BTC" },
+    { id: 2, title: "Ethereum Shanghai upgrade sparks L2 renaissance", summary: "Arbitrum and Optimism TVL jumps 34% after staking withdrawals enabled. ETH deflationary pressure intensifies.", category: "Ethereum", date: "Apr 4, 2026", image: "https://placehold.co/600x400/202a3a/white?text=ETH" },
+    { id: 3, title: "DeFi summer 2.0? Restaking protocols reach $15B TVL", summary: "EigenLayer and new liquid restaking tokens become hottest narrative. Yields up to 12% attract institutions.", category: "DeFi", date: "Apr 3, 2026", image: "https://placehold.co/600x400/1b2a2f/white?text=DeFi" },
+    { id: 4, title: "Solana flips BNB in daily DEX volume, SOL rallies 22%", summary: "Meme coin mania and improved stability drive network growth; Firedancer client nears mainnet.", category: "Altcoins", date: "Apr 5, 2026", image: "https://placehold.co/600x400/191e2e/white?text=SOL" },
+    { id: 5, title: "G20 nations align on crypto tax framework, markets react", summary: "OECD unveils global reporting standards; short-term volatility but long-term clarity praised.", category: "Regulation", date: "Apr 2, 2026", image: "https://placehold.co/600x400/182232/white?text=G20" },
+    { id: 6, title: "XRP victorious: SEC drops appeal, payment giant expands", summary: "Ripple wins landmark case; XRP jumps 40% as US banks restart integration.", category: "Regulation", date: "Apr 5, 2026", image: "https://placehold.co/600x400/1b2135/white?text=XRP" },
+    { id: 7, title: "Avalanche subnet explosion: gaming & institutional chains go live", summary: "Over 50 subnets deployed; AVAX staking hits record high.", category: "Altcoins", date: "Apr 1, 2026", image: "https://placehold.co/600x400/152433/white?text=AVAX" },
+    { id: 8, title: "Bitcoin Layer 2's on fire: Stacks & RSK see all-time high activity", summary: "Ordinals and BRC-20 tokens drive demand for scalable Bitcoin layers.", category: "Bitcoin", date: "Apr 4, 2026", image: "https://placehold.co/600x400/0f1f2c/white?text=BitcoinL2" },
+    { id: 9, title: "Ethereum Dencun upgrade reduces L2 fees by 90%", summary: "Proto-danksharding goes live; base fee for rollups drops dramatically, boosting adoption.", category: "Ethereum", date: "Apr 3, 2026", image: "https://placehold.co/600x400/1c283b/white?text=Dencun" },
+    { id: 10, title: "Chainlink CCIP connects 12 new blockchains", summary: "Cross-chain interoperability reaches new milestone, tokenized assets surge.", category: "DeFi", date: "Apr 2, 2026", image: "https://placehold.co/600x400/1a263a/white?text=LINK" },
+    { id: 11, title: "EU MiCA implementation: stablecoin rules clarified", summary: "USDC and EURC gain compliance edge; exchanges adjust reserves.", category: "Regulation", date: "Apr 1, 2026", image: "https://placehold.co/600x400/1b2a3c/white?text=MiCA" },
+    { id: 12, title: "Sui and Aptos lead Move ecosystem resurgence", summary: "Parallel processing gains attention; TVL crosses $1.2B combined.", category: "Altcoins", date: "Mar 31, 2026", image: "https://placehold.co/600x400/17212e/white?text=MOVE" }
+  ];
+
+  // ---------- LOCAL STORAGE KEYS ----------
+  const STORAGE_FAV_KEY = "nikohub_favorites";
+
+  // ---------- GLOBAL STATE ----------
+  let favorites = new Set();        // store favorite article IDs (numbers)
+  let currentFilter = "all";
+  let currentSearch = "";
+
+  // ---------- HELPER: load favorites from localStorage ----------
+  function loadFavoritesFromStorage() {
+    const stored = localStorage.getItem(STORAGE_FAV_KEY);
+    if (stored) {
+      try {
+        const arr = JSON.parse(stored);
+        favorites = new Set(arr);
+      } catch(e) { favorites = new Set(); }
+    } else {
+      favorites = new Set();
+    }
+    updateFavCounter();
+  }
+
+  // save current favorites Set to localStorage
+  function persistFavorites() {
+    const favArray = Array.from(favorites);
+    localStorage.setItem(STORAGE_FAV_KEY, JSON.stringify(favArray));
+    updateFavCounter();
+  }
+
+  function updateFavCounter() {
+    const counterSpan = document.getElementById("favCount");
+    if (counterSpan) counterSpan.innerText = favorites.size;
+  }
+
+  // toggle favorite status for an article id
+  function toggleFavorite(articleId) {
+    if (favorites.has(articleId)) {
+      favorites.delete(articleId);
+    } else {
+      favorites.add(articleId);
+    }
+    persistFavorites();
+    renderNews();   // re-render to update active star state
+  }
+
+  // ---------- FILTERING & SEARCH LOGIC ----------
+  function getFilteredNews() {
+    let filtered = [...NEWS_DB];
+
+    // apply category filter
+    if (currentFilter !== "all") {
+      filtered = filtered.filter(article => article.category === currentFilter);
+    }
+
+    // apply search (title + summary)
+    if (currentSearch.trim() !== "") {
+      const searchLower = currentSearch.trim().toLowerCase();
+      filtered = filtered.filter(article =>
+        article.title.toLowerCase().includes(searchLower) ||
+        article.summary.toLowerCase().includes(searchLower) ||
+        article.category.toLowerCase().includes(searchLower)
+      );
+    }
+    return filtered;
+  }
+
+  // ---------- RENDER DYNAMIC NEWS CARDS ----------
+  function renderNews() {
+    const container = document.getElementById("newsContainer");
+    if (!container) return;
+
+    const filteredArticles = getFilteredNews();
+
+    if (filteredArticles.length === 0) {
+      container.innerHTML = `<div class="empty-state">
+        <span style="font-size: 2rem;">🔍📭</span>
+        <h3 style="margin-top: 1rem;">No matching crypto insights</h3>
+        <p style="color: #95a5c6;">Try different keywords or reset the filter</p>
+      </div>`;
+      return;
+    }
+
+    // build cards HTML
+    let cardsHTML = "";
+    for (const article of filteredArticles) {
+      const isFav = favorites.has(article.id);
+      const starIcon = isFav ? "⭐" : "☆";
+      const activeClass = isFav ? "active" : "";
+
+      cardsHTML += `
+        <div class="news-card" data-id="${article.id}">
+          <div class="card-img" style="background-image: url('${article.image}'); background-size: cover;">
+            <div class="category-badge">${article.category}</div>
+          </div>
+          <div class="card-content">
+            <div class="news-title">${escapeHtml(article.title)}</div>
+            <div class="news-summary">${escapeHtml(article.summary)}</div>
+            <div class="card-footer">
+              <div class="date">📅 ${article.date}</div>
+              <button class="favorite-btn ${activeClass}" data-id="${article.id}" data-fav-action="toggle">
+                ${starIcon} <span style="font-size:0.75rem;">save</span>
+              </button>
+            </div>
+            <div style="margin-top: 12px; text-align: right;">
+              <a href="#" class="read-more" data-id="${article.id}">read more →</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    container.innerHTML = cardsHTML;
+
+    // attach event listeners to favorite buttons and read-more links
+    document.querySelectorAll('.favorite-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idAttr = btn.getAttribute('data-id');
+        if (idAttr) {
+          const articleId = parseInt(idAttr, 10);
+          toggleFavorite(articleId);
+        }
+      });
+    });
+
+    // "read more" dummy alerts but shows real article data
+    document.querySelectorAll('.read-more').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const idAttr = link.getAttribute('data-id');
+        if (idAttr) {
+          const article = NEWS_DB.find(a => a.id === parseInt(idAttr, 10));
+          if (article) {
+            alert(`🔍 NikoHub Deep Dive\n\n📰 ${article.title}\n\n📌 ${article.summary}\n\n🔗 Full article: /analysis/${article.id} (demo)\n💾 Saved to your favorites: ${favorites.has(article.id) ? "YES" : "NO"}`);
+          } else {
+            alert("Article details loading...");
+          }
+        }
+      });
+    });
+  }
+
+  // simple XSS protection
+  function escapeHtml(str) {
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+      return c;
+    });
+  }
+
+  // ---------- EVENT LISTENERS & UI INIT ----------
+  function setupEventListeners() {
+    const searchInput = document.getElementById("searchInput");
+    const clearBtn = document.getElementById("clearSearchBtn");
+    const filterBtns = document.querySelectorAll(".filter-btn");
+
+    // search debouncer
+    let debounceTimeout;
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(() => {
+          currentSearch = e.target.value;
+          renderNews();
+        }, 280);
+      });
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => {
+        if (searchInput) {
+          searchInput.value = "";
+          currentSearch = "";
+          renderNews();
+        }
+      });
+    }
+
+    // filter buttons
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const filterValue = btn.getAttribute("data-filter");
+        if (filterValue) {
+          currentFilter = filterValue;
+          // update active UI class
+          filterBtns.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderNews();
+        }
+      });
+    });
+  }
+
+  // additional feature: favorite count & synchronization on any changes
+  // also, after any external modification of favorites (toggle already calls render)
+  // and initial load from localStorage
+
+  function init() {
+    loadFavoritesFromStorage();
+    setupEventListeners();
+    renderNews();
+    // optional: listen for storage changes from other tabs (nice extra)
+    window.addEventListener("storage", (e) => {
+      if (e.key === STORAGE_FAV_KEY) {
+        loadFavoritesFromStorage();
+        renderNews();
+      }
+    });
+  }
+
+  // start app
+  init();
+</script>
+</body>
+</html>
